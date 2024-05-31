@@ -1,59 +1,24 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import TeacherList from '../views/TeacherList'
+// src/router/index.js
+import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorld from '../components/HelloWorld.vue'
-import StudentList from '../views/StudentList.vue'
-import Displaydata from '../views/Displaydata.vue'
-import AboutView from '../views/AboutView.vue'
+import TeacherList from '../components/TeacherList.vue';
+import TeacherForm from '../components/TeacherForm.vue';
+import StudentForm from '../components/StudentForm.vue';
+import StudentList from '../components/StudentList.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HelloWorld
-  },
-  {
-    path: '/teacher',
-    name: 'TeacherList',
-    component: TeacherList
-  },
-  {
-    path: '/homeview',
-    name: 'homeview',
-    component: HomeView
-  },
-  {
-    path: '/aboutview',
-    name: 'Aboutview',
-    component: AboutView
-  },
-  
-  {
-    path: '/edit/:teacherNum',
-    name: 'EditTeacher',
-    component: HomeView,
-    props:true
-  },
-  {
-    path: '/edit/:studentNum',
-    name: 'EditStudent',
-    component: AboutView,
-    props:true
-  },
-  
-  {
-    path: '/student',
-    name: 'StudentList',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/StudentList.vue') 
-  }
-]
+  { path: '/', name: 'HelloWorld', component: HelloWorld },
+  { path: '/teacher', name: 'TeacherList', component: TeacherList },
+  { path: '/student', name: 'StudentList', component: StudentList },
+  { path: '/add-teacher', name: 'AddTeacher', component: TeacherForm },
+  { path: '/add-student', name: 'AddStudent', component: StudentForm },
+  { path: '/edit-teacher/:teacherNumber', name: 'EditTeacher', component: TeacherForm, props: true },
+  { path: '/edit-student/:studentNumber', name: 'EditStudent', component: StudentForm, props: true },
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  history: createWebHistory(),
+  routes,
+});
 
-export default router
+export default router;

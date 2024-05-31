@@ -1,72 +1,67 @@
-import { createStore } from 'vuex'
+// src/store/index.js
+import { createStore } from 'vuex';
 
-export default createStore({
+const store = createStore({
   state: {
-   teachers:[],
-   students:[]
-
-  },
-  getters: {
-    getTeacher:state=> state.teachers,
-    getStudent:state=> state.students,
-    getTeacherNum:state=>(teacherNum)=>state.teachers.filter(tNum => tNum.teacherNum ===teacherNum),
-    getStudentNum:state=>(studentNum)=>state.students.filter(sNum => sNum.studentNum ===studentNum),
-     
-
-    
+    teachers: [],
+    students: [],
   },
   mutations: {
-    UpdateTeacher(state,teach){ 
-      state.teachers.push(teach)
+    ADD_TEACHER(state, teacher) {
+      state.teachers.push(teacher);
       console.log(state.teachers)
     },
-    UpdateStudent(state,student){ 
-      state.students.push(student)
+    ADD_STUDENT(state, student) {
+      state.students.push(student);
       console.log(state.students)
     },
-    EditedTeacher(state,updatedteacher){
-      const index = state.teachers.findIndex(tind => tind.teacherNum === updatedteacher.teacherNum)
-      if(index !== -1){
-        state.teachers.splice(index,1,updatedteacher)
+    EDIT_TEACHER(state, updatedTeacher) {
+      const index = state.teachers.findIndex(t => t.teacherNumber === updatedTeacher.teacherNumber);
+      if (index !== -1) {
+        state.teachers.splice(index, 1, updatedTeacher);
       }
-      
     },
-    EditedStudent(state,updatedstudent){
-      const index = state.students.findIndex(sind => sind.studentNum === updatedstudent.studentNum)
-      if(index !== -1){
-        state.students.splice(index,1,updatedstudents)
+    EDIT_STUDENT(state, updatedStudent) {
+      const index = state.students.findIndex(t => t.studentNumber === updatedStudent.studentNumber);
+      if (index !== -1) {
+        state.students.splice(index, 1, updatedStudent);
       }
-      
     },
-    DeleteStudent(state,studentNum){
-      state.students=state.students.filter(s =>s.studentNum !==studentNum)
+    DELETE_TEACHER(state, teacherNumber) {
+      state.teachers = state.teachers.filter(t => t.teacherNumber !== teacherNumber);
     },
-    DeleteTeacher(state,teacherNum){
-      state.teachers = state.teachers.filter(t=>t.teacherNum !==teacherNum);
-    }
-    
-    
+    DELETE_STUDENT(state, studentNumber) {
+      state.students = state.students.filter(t => t.studentNumber !== studentNumber);
+    },
   },
+  
   actions: {
-    addteachers({commit},teach){
-      commit('UpdateTeacher',teach)
-      
+    addTeacher({ commit }, teacher) {
+      commit('ADD_TEACHER', teacher);
     },
-    addstudents({commit},student){
-      commit('UpdateStudent',student)
-    },editTeacher({commit},updatedteacher){
-      commit('EditedTeacher',updatedteacher)
+    editTeacher({ commit }, updatedTeacher) {
+      commit('EDIT_TEACHER', updatedTeacher);
     },
-    editStudent({commit},updatedstudent){
-      commit('EditedStudent',updatedstudent)
+    deleteTeacher({ commit }, teacherNumber) {
+      commit('DELETE_TEACHER', teacherNumber);
     },
-    deleteStudent({commit},studentNum){
-      commit('DeleteStudent',studentNum)
+    addStudent({ commit }, student) {
+      commit('ADD_STUDENT', student);
     },
-    deleteTeacher({commit},teacherNum){
-      commit('DeleteTeacher',teacherNum)
-    }
+    editStudent({ commit }, updatedStudent) {
+      commit('EDIT_STUDENT', updatedStudent);
+    },
+    deleteStudent({ commit }, studentNumber) {
+      commit('DELETE_STUDENT', studentNumber);
+    },
   },
-  modules: {
-  }
-})
+  getters: {
+    allTeachers: state => state.teachers,
+    getTeacherByNumber: state => teacherNumber => state.teachers.find(t => t.teacherNumber === teacherNumber),
+    allStudents: state => state.students,
+    getStudentByNumber: state => studentNumber => state.students.find(t => t.studentNumber === studentNumber),
+  },
+});
+
+export default store;
+
